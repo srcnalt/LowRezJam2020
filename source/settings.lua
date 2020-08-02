@@ -6,6 +6,7 @@ lw = love.window
 --constant variables
 SCREEN_SCALE = 12
 SCREEN_UNIT = 64 * SCREEN_SCALE
+DEBUG_ON = true
 
 --window settings
 lg.setBackgroundColor(0.5, 0.2, 0.3)
