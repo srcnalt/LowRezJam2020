@@ -1,0 +1,1 @@
+debugImage = lg.newImage('graphics/test64x64.png')
