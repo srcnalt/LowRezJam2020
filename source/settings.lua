@@ -16,3 +16,6 @@ lg.setDefaultFilter('nearest', 'nearest')
 
 lw.setMode(SCREEN_UNIT, SCREEN_UNIT, {fullscreen = false, centered = true})
 lw.setTitle('Elder Scrolls')
+
+--random seed
+math.randomseed(os.time())
