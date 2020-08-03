@@ -3,16 +3,22 @@ require 'source.settings'
 require 'source.debug'
 require 'source.utils'
 require 'source.states'
+require 'source.anim'
+
+--objects
+_map = require 'source.objects.map'
 
 --plugins
 _input = require 'plugins.Input'
 
 function love.load()
-    gameState = SceneStates.debug
+    gameState = SceneStates.menu
     stateToGo = SceneStates.debug
 
     input = _input()
     input:bind('space', 'next')
+
+    map = _map()
 
     drawInit()
 end
@@ -23,6 +29,8 @@ function love.update(dt)
             stateToGo = SceneStates.intro
             curtainIsOn = true
         end
+        
+        map:update(dt)
     elseif gameState == SceneStates.intro then
         if input:pressed('next') then
             stateToGo = SceneStates.game
@@ -54,7 +62,7 @@ function love.draw()
 
     --states
     if gameState == SceneStates.menu then 
-
+        map:draw()
     elseif gameState == SceneStates.intro then
 
     elseif gameState == SceneStates.game then

@@ -31,14 +31,14 @@ function updateCurtain(dt)
     if curtainIsOn then
         if curtainDarken then
             if curtainAlpha > 0 then
-                curtainAlpha = curtainAlpha - dt
+                curtainAlpha = curtainAlpha - dt * CURTAIN_SPEED
             else
                 gameState = stateToGo
                 curtainDarken = false
             end
         else
             if curtainAlpha < 1 then
-                curtainAlpha = curtainAlpha + dt
+                curtainAlpha = curtainAlpha + dt * CURTAIN_SPEED
             else
                 curtainDarken = true
                 curtainIsOn  = false
