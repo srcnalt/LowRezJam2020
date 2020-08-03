@@ -7,6 +7,7 @@ require 'source.anim'
 
 --objects
 _map = require 'source.objects.map'
+_enemy_1 = require 'source.objects.enemy_1'
 _player = require 'source.objects.player'
 
 --plugins
@@ -21,6 +22,7 @@ function love.load()
 
     map = _map()
     player = _player()
+    enemyOne = _enemy_1()
 
     drawInit()
 end
@@ -33,6 +35,7 @@ function love.update(dt)
         end
         
         map:update(dt)
+        enemyOne:update(dt)
         player:update(dt)
     elseif gameState == SceneStates.intro then
         if input:pressed('next') then
@@ -66,6 +69,7 @@ function love.draw()
     --states
     if gameState == SceneStates.menu then 
         map:draw()
+        enemyOne:draw()
         player:draw()
     elseif gameState == SceneStates.intro then
 
