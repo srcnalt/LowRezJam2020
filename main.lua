@@ -17,6 +17,8 @@ function love.load()
     gameState = SceneStates.menu
     stateToGo = SceneStates.debug
 
+    globalPos = 0
+
     input = _input()
     input:bind('space', 'next')
 

@@ -5,3 +5,9 @@ SceneStates = {
     game    = 'game',
     credits = 'credits'
 }
+
+MovementStates = {
+    stop     = 'stop',
+    forward  = 'forward',
+    backward = 'backward'
+}
