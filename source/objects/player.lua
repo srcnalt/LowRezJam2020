@@ -5,6 +5,7 @@ function Player.new()
     local player = lg.newImage('graphics/player/sword-shield.png')
 
     input:bind('up', 'player_move_forward')
+    input:bind('down', 'player_move_backwards')
 
     return setmetatable({
         img = player,
@@ -16,14 +17,14 @@ function Player.new()
 end
 
 function Player:update(dt)
-    if input:down('player_move_forward') then
+    if input:down('player_move_forward') or input:down('player_move_backwards') then
         self.moving = true
         self.speed = 8
-    elseif  input:released('player_move_forward') then
+    elseif input:released('player_move_forward') or input:released('player_move_backwards') then
         self.moving = false
         self.speed = 1 
     end
-    
+
     self.y = self.y + dt * self.speed
 end
 
