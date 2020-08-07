@@ -12,7 +12,7 @@ function anim.new(img, fw, fh, speed)
 
 	self.img    = img 
 	self.speed  = speed
-	self.pos 	  = 1
+	self.pos 	= 1
 	self.time   = 0
  	self.frames = {}
  	self.count  = col * row
@@ -39,6 +39,7 @@ function anim:update(dt)
 
 	self.time = self.time + dt
 
+	--run anim forward
 	if self.speed > 0 and self.time > self.speed then
 		self.time = 0
 
@@ -46,6 +47,17 @@ function anim:update(dt)
 			self.pos = self.pos + 1
 		else
 			self.pos = 1
+		end
+	end 
+	
+	--run anim backwards
+	if self.speed < 0 and self.time > -self.speed then
+		self.time = 0
+
+		if self.pos > 0 then
+			self.pos = self.pos - 1
+		else
+			self.pos = #self.frames
 		end
 	end
 end
