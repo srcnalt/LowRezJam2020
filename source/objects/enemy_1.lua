@@ -35,7 +35,7 @@ function EnemyOne:update(dt)
     self.posX = math.sin(self.time) * 2 + 32 - 32 * self.scale
     self.posY = math.cos(self.time) * 2 + 32 - 32 * self.scale
 
-    if not encountered and self.scale == 1 then
+    if not encountered and self.scale > 0.3 then
       encountered = true
     end
 
