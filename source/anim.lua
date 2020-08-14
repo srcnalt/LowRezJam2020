@@ -7,8 +7,8 @@ function anim.new(img, fw, fh, speed)
 	self.iw  	= img:getWidth()
 	self.ih  	= img:getHeight()
 
-	local col = math.ceil(self.iw / fw)
-	local row = math.ceil(self.ih / fh)
+	local col   = math.ceil(self.iw / fw)
+	local row   = math.ceil(self.ih / fh)
 
 	self.img    = img 
 	self.speed  = speed
@@ -54,7 +54,7 @@ function anim:update(dt)
 	if self.speed < 0 and self.time > -self.speed then
 		self.time = 0
 
-		if self.pos > 0 then
+		if self.pos > 1 then
 			self.pos = self.pos - 1
 		else
 			self.pos = #self.frames
@@ -83,4 +83,9 @@ function anim:reload(fw, fh, fc)
 			table.insert(self.frames, love.graphics.newQuad(fw * j, fh * i, fw, fh, self.iw, self.ih))
 		end
 	end
+end
+
+function anim:reset()
+	self.time = 0
+	self.pos = 1
 end
