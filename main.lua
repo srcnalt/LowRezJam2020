@@ -65,7 +65,7 @@ function love.draw()
   end
 
   --draw debug
-  drawDebug(gameState)
+  drawDebug(enemy.state)
   --draw curtain
   drawCurtain()
   --end drawing into canvas

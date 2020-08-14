@@ -27,7 +27,7 @@ function Player.new()
         y = 0,
         speed = 0,
         health = 100,
-        power = 250,
+        power = 50,
         state = PlayerState.idle
     }, Player)
 end
@@ -36,25 +36,27 @@ function Player:update(dt)
     HandleInput(self)
 
     if self.state == PlayerState.idle then
-        self.y = self.y + dt * self.speed
+      self.y = self.y + dt * self.speed
     elseif self.state == PlayerState.attack then
-        self.fight.time = self.fight.time + dt
+      self.fight.time = self.fight.time + dt
 
-        if self.fight.time > self.fight.cooldown then
-            self.state = PlayerState.idle
-            self.fight.time = 0
-            self.fight.active = false
+      if self.fight.time > self.fight.cooldown then
+        self.state = PlayerState.idle
+        self.fight.time = 0
+        self.fight.active = false
 
-            HitEnemy(self)
-        end
+        enemy:getDamage(self.power + math.random(-20, 20))
+      end
     elseif self.state == PlayerState.defend then
-        self.fight.time = self.fight.time + dt
+      self.fight.time = self.fight.time + dt
 
-        if self.fight.time > self.fight.cooldown then
-            self.state = PlayerState.idle
-            self.fight.time = 0
-            self.fight.active = false
-        end
+      if self.fight.time > self.fight.cooldown then
+        self.state = PlayerState.idle
+        self.fight.time = 0
+        self.fight.active = false
+      end
+    elseif self.state == PlayerState.defend then
+      
     end    
 end
 
@@ -87,16 +89,10 @@ function HandleInput(self)
 end
 
 function Player:getDamage(damage)
-    self.health = self.health - damage
+  self.health = self.health - damage
 
-    if self.health <= 0 then
-        self.state = PlayerState.dead
-    end
-end
-
-function HitEnemy(self)
-  if enemy.state == EnemyState.attack then
-    enemy:getDamage(self.power + math.random(-20, 20))
+  if self.health <= 0 then
+    self.state = PlayerState.dead
   end
 end
 
