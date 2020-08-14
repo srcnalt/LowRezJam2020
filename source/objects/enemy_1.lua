@@ -14,7 +14,7 @@ function EnemyOne.new()
       attack = animAttack
     },
     attack = {
-      delay = 2,
+      delay = 1,
       time = 0,
       length = 1
     },
@@ -34,8 +34,6 @@ function EnemyOne:update(dt)
   if self.state == EnemyState.asleep then
     --
   elseif self.state == EnemyState.idle then
-    ScaleBody(self, dt)
-
     if not encountered and self.scale > 0.4 then
       encountered = true
     end
@@ -48,12 +46,18 @@ function EnemyOne:update(dt)
       self.linearPos = self.linearPos - dt / 4
     end
 
+    self.anim.attack:reset()
+    self.attack.time = 0
+
+    ScaleBody(self, dt)
+
     self.anim.idle:update(dt)
   elseif self.state == EnemyState.attack then
     ScaleBody(self, dt)
     self.attack.time = self.attack.time + dt
 
     if self.attack.time >= self.attack.delay + self.attack.length then
+      self.anim.attack:reset()
       self.attack.time = 0
     elseif self.attack.time >= self.attack.delay then
       self.anim.attack:update(dt)
