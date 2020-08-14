@@ -22,7 +22,7 @@ function EnemyOne.new()
     posX = 0,
     posY = 0,
     scale = 0.1,
-    linearPos = 1.5,
+    linearPos = 7,
     state = EnemyState.asleep,
     encountered = false
   }, EnemyOne)
@@ -31,21 +31,19 @@ end
 function EnemyOne:update(dt)
   CheckState(self)
 
-  if self.state == EnemyState.asleep then
-    --
-  elseif self.state == EnemyState.idle then
-    if not encountered and self.scale > 0.4 then
-      encountered = true
-    end
+  if not encountered and self.scale > 0.4 then
+    encountered = true
+  end
 
-    if encountered and globalPos > self.linearPos then
-      self.linearPos = globalPos
-    end
-    
-    if encountered and globalPos < self.linearPos then
-      self.linearPos = self.linearPos - dt / 4
-    end
+  if encountered and globalPos > self.linearPos then
+    self.linearPos = globalPos
+  end
+  
+  if encountered and globalPos < self.linearPos and self.scale > 0.1 then
+    self.linearPos = self.linearPos - dt / 4
+  end
 
+  if self.state == EnemyState.idle then
     self.anim.attack:reset()
     self.attack.time = 0
 
