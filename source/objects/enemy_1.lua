@@ -23,6 +23,10 @@ function EnemyOne.new()
       length = 1,
       hitting = false
     },
+    damage = {
+      time = 0,
+      length = 0.6
+    },
     time = 0,
     posX = 0,
     posY = 0,
@@ -75,7 +79,15 @@ function EnemyOne:update(dt)
       self.anim.attack:update(dt)
     else
       self.anim.idle:update(dt)
-    end    
+    end
+  elseif self.state == EnemyState.damaged then
+    self.damage.time = self.damage.time + dt
+    self.anim.hit:update(dt)
+
+    if self.damage.time >= self.damage.length then
+      self.damage.time = 0
+      self.state = EnemyState.idle
+    end
   end
 end
 
@@ -89,20 +101,31 @@ function EnemyOne:draw()
       self.anim.attack:draw(self.posX, self.posY, 0, self.scale, self.scale)
     else
       self.anim.idle:draw(self.posX, self.posY, 0, self.scale, self.scale)
-    end 
+    end
+  elseif self.state == EnemyState.damaged then
+    self.anim.hit:draw(self.posX, self.posY, 0, self.scale, self.scale)
   end
 end
 
 function EnemyOne:getDamage(damage)
+  if self.linearPos - globalPos == 0 then
+    self.state = EnemyState.damaged
     self.health = self.health - damage
 
     if self.health <= 0 then
-        self.state = EnemyState.dead
+      self.state = EnemyState.dead
     end
+  end
 end
 
 function CheckState(self)
-  if self.linearPos - globalPos > 1 then
+  if self.state == EnemyState.dead then
+    --
+  elseif self.state == EnemyState.damaged then
+    if self.damage.time >= self.damage.length then
+      self.state = EnemyState.idle
+    end
+  elseif self.linearPos - globalPos > 1 then
     self.state = EnemyState.asleep
   elseif self.linearPos - globalPos > 0 then
     self.state = EnemyState.idle
