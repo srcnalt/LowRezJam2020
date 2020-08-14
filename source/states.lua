@@ -17,3 +17,9 @@ EnemyState = {
     idle     = 'idle',
     attack   = 'attack'
 }
+
+PlayerState = {
+    idle    = 'idle',
+    attack  = 'attack',
+    defend  = 'defend'
+}
