@@ -11,3 +11,9 @@ MovementStates = {
     forward  = 'forward',
     backward = 'backward'
 }
+
+EnemyState = {
+    asleep   = 'asleep',
+    idle     = 'idle',
+    attack   = 'attack'
+}
