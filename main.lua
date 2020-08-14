@@ -14,7 +14,7 @@ _player = require 'source.objects.player'
 _input = require 'plugins.Input'
 
 function love.load()
-    gameState = SceneStates.game
+    gameState = SceneStates.menu
     stateToGo = SceneStates.debug
 
     globalPos = 0
@@ -25,6 +25,10 @@ function love.load()
     map = _map()
     player = _player()
     enemy = _enemy()
+
+    images = {
+      menu = lg.newImage('graphics/menu.png')
+    }
 
     drawInit()
 end
@@ -53,7 +57,7 @@ function love.draw()
 
   --states
   if gameState == SceneStates.menu then 
-
+    lg.draw(images.menu, 0, 0)
   elseif gameState == SceneStates.intro then
 
   elseif gameState == SceneStates.game then

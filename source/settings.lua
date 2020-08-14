@@ -7,7 +7,7 @@ lw = love.window
 CURTAIN_SPEED = 2
 SCREEN_SCALE = 12
 SCREEN_UNIT = 64 * SCREEN_SCALE
-DEBUG_ON = true
+DEBUG_ON = false
 
 --window settings
 --14, 10, 13
