@@ -7,7 +7,7 @@ require 'source.anim'
 
 --objects
 _map = require 'source.objects.map'
-_enemy_1 = require 'source.objects.enemy_1'
+_enemy = require 'source.objects.enemy_1'
 _player = require 'source.objects.player'
 
 --plugins
@@ -24,26 +24,24 @@ function love.load()
 
     map = _map()
     player = _player()
-    enemyOne = _enemy_1()
+    enemy = _enemy()
 
     drawInit()
 end
 
 function love.update(dt)
     if gameState == SceneStates.menu then 
-      CheckNextStateToGo(SceneStates.menu)
-    elseif gameState == SceneStates.intro then
       CheckNextStateToGo(SceneStates.intro)
-    elseif gameState == SceneStates.game then
+    elseif gameState == SceneStates.intro then
       CheckNextStateToGo(SceneStates.game)
+    elseif gameState == SceneStates.game then
+      CheckNextStateToGo(SceneStates.credits)
 
       map:update(dt)
-      enemyOne:update(dt)
+      enemy:update(dt)
       player:update(dt)
     elseif gameState == SceneStates.credits then
-      CheckNextStateToGo(SceneStates.credits)
-    elseif gameState == SceneStates.debug then 
-      CheckNextStateToGo(SceneStates.debug)
+      CheckNextStateToGo(SceneStates.menu)
     end
 
     updateCurtain(dt)
@@ -60,7 +58,7 @@ function love.draw()
 
   elseif gameState == SceneStates.game then
     map:draw()
-    enemyOne:draw()
+    enemy:draw()
     player:draw()
   elseif gameState == SceneStates.credits then
 

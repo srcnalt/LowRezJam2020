@@ -15,11 +15,14 @@ MovementStates = {
 EnemyState = {
     asleep   = 'asleep',
     idle     = 'idle',
-    attack   = 'attack'
+    attack   = 'attack',
+    damaged  = 'damaged',
+    dead     = 'dead'
 }
 
 PlayerState = {
     idle    = 'idle',
     attack  = 'attack',
-    defend  = 'defend'
+    defend  = 'defend',
+    dead    = 'dead'
 }
