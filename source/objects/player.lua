@@ -10,6 +10,9 @@ function Player.new()
   local defendImg = lg.newImage('graphics/player/Player_Defend.png')
   local animDefend = anim.new(defendImg, 64, 64, 0.2)
 
+  local hitAudio = la.newSource("sound/sfx/hit3.wav", "static")
+  local swingAudio = la.newSource("sound/sfx/hit.wav", "static")
+
   input:bind('up', 'player_move_forward')
   input:bind('down', 'player_move_backwards')
   input:bind('left', 'player_attack')
@@ -30,6 +33,10 @@ function Player.new()
       time = 0,
       cooldown = 0.6,
       active = false
+    },
+    audio = {
+      hit = hitAudio,
+      swing = swingAudio
     },
     moving = false,
     x = 0,
@@ -55,8 +62,15 @@ function Player:update(dt)
         self.fight.time = 0
         self.fight.active = false
         self.img.attack.pos = 1
+      end
 
-        enemy:getDamage(self.power + math.random(-20, 20))
+      if self.img.attack.pos == 3 then
+        if enemy.state == EnemyState.attack and not enemy.attack.hitting then
+          self.audio.hit:play()
+          enemy:getDamage(self.power + math.random(-20, 20))
+        else
+          self.audio.swing:play()
+        end
       end
     elseif self.state == PlayerState.defend then
       self.defend.time = self.defend.time + dt
@@ -96,8 +110,7 @@ function HandleInput(self)
         self.state = PlayerState.attack 
         self.fight.active = true
     elseif input:pressed('player_defend') and not self.defend.active then
-        self.state = PlayerState.defend 
-        self.defend.active = true
+        self.state = PlayerState.defend
     end
 end
 
