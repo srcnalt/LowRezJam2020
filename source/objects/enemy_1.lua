@@ -49,7 +49,7 @@ function EnemyOne.new()
     posY = 0,
     scale = 0.1,
     linearPos = 1.5,
-    power = math.random(40, 60),
+    power = math.random(10, 10),
     health = math.random(80, 120),
     state = EnemyState.asleep,
     encountered = false
@@ -147,6 +147,7 @@ function EnemyOne:getDamage(damage)
     if self.health <= 0 then
       self.state = EnemyState.dead
       self.audio.die:play()
+      player.killCount = player.killCount + 1
     else
       self.audio.hit:play()
     end

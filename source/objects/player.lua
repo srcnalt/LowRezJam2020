@@ -10,6 +10,10 @@ function Player.new()
   local defendImg = lg.newImage('graphics/player/Player_Defend.png')
   local animDefend = anim.new(defendImg, 64, 64, 0.2)
 
+  local lifebarImg = lg.newImage('graphics/ui/life_bar.png')
+  local font = lg.newImageFont('graphics/ui/number_font.png', "1234567890")
+  lg.setFont(font)
+
   local hitAudio = la.newSource("sound/sfx/hurt.wav", "static")
   local swingAudio = la.newSource("sound/sfx/hit.wav", "static")
   local dieAudio = la.newSource("sound/sfx/hurt3.wav", "static")
@@ -23,7 +27,8 @@ function Player.new()
     img = {
       idle = idleImg,
       attack = animAttack,
-      defend = animDefend
+      defend = animDefend,
+      lifebar = lifebarImg
     },
     fight = {
       time = 0,
@@ -46,7 +51,8 @@ function Player.new()
     speed = 0,
     health = 100,
     power = 20,
-    state = PlayerState.idle
+    state = PlayerState.idle,
+    killCount = 0
   }, Player)
 end
 
@@ -101,6 +107,15 @@ function Player:draw()
   elseif self.state == PlayerState.defend then
     self.img.defend:draw()
   end
+
+  --life bar
+  lg.draw(self.img.lifebar)
+  lg.setColor(0, 1, 0, 1)
+  lg.rectangle("fill", 9, 2, 37 * self.health / 100, 3)
+  lg.setColor(1, 1, 1, 1)
+
+  --kill count
+  lg.print(self.killCount, 56, 1)
 end
 
 function HandleInput(self)
