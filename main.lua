@@ -67,7 +67,9 @@ function love.draw()
 
   end
 
-  lg.print(string.format("%s", player.health))
+  lg.print(string.format("%s", player.defend.active))
+  lg.print(string.format("%s", player.fight.active), 0, 10)
+  lg.print(string.format("%s", player.health), 0, 20)
   --draw curtain
   drawCurtain()
   --end drawing into canvas
