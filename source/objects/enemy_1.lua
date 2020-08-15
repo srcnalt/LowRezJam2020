@@ -11,7 +11,12 @@ function EnemyOne.new()
   local getHit = lg.newImage('graphics/enemies/Enemy_Skeleton_GetHit.png')
   local animGetHit = anim.new(getHit, 64, 64, 0.2)
   
-  local hitAudio = la.newSource("sound/sfx/hurt.wav", "static")
+  local hitAudio = la.newSource("sound/sfx/hit3.wav", "static")
+  local dodgeAudio = la.newSource("sound/sfx/hit2.wav", "static")
+  local dieAudio = la.newSource("sound/sfx/hurt2.wav", "static")
+  
+  local dodgeMsg = lg.newImage('graphics/messages/dodged.png')
+  local hitMsg = lg.newImage('graphics/messages/hit.png')
 
   return setmetatable({
     anim = {
@@ -23,21 +28,28 @@ function EnemyOne.new()
       delay = 1,
       time = 0,
       length = 1,
-      hitting = false
+      hitting = false,
+      dodged = false
     },
     damage = {
       time = 0,
-      length = 0.6
+      length = 0.4
     },
     audio = {
-      hit = hitAudio
+      hit = hitAudio,
+      dodge = dodgeAudio,
+      die = dieAudio
+    },
+    messages = {
+      dodge = dodgeMsg,
+      hit = hitMsg
     },
     time = 0,
     posX = 0,
     posY = 0,
     scale = 0.1,
     linearPos = 1.5,
-    power = math.random(20, 30),
+    power = math.random(40, 60),
     health = math.random(80, 120),
     state = EnemyState.asleep,
     encountered = false
@@ -73,12 +85,17 @@ function EnemyOne:update(dt)
     if self.anim.attack.pos == 3 and not self.attack.hitting then
       self.attack.hitting = true
 
-      if player.state ~= PlayerState.dead and not player.defend.active and self.attack.hitting then
-        player:getDamage(self.power)
-        self.audio.hit:play()
+      if player.state ~= PlayerState.dead and self.attack.hitting then
+        if player.defend.active then
+          self.attack.dodged = true
+          self.audio.dodge:play()
+        else
+          player:getDamage(self.power)
+        end
       end
     elseif self.anim.attack.pos == 4 then
       self.attack.hitting = false
+      self.attack.dodged = false
     end
 
     if self.attack.time >= self.attack.delay + self.attack.length then
@@ -112,8 +129,13 @@ function EnemyOne:draw()
     else
       self.anim.idle:draw(self.posX, self.posY, 0, self.scale, self.scale)
     end
+    
+    if self.attack.dodged then
+      lg.draw(self.messages.dodge, 20, 20)
+    end
   elseif self.state == EnemyState.damaged then
     self.anim.hit:draw(self.posX, self.posY, 0, self.scale, self.scale)
+    lg.draw(self.messages.hit, 27, 20)
   end
 end
 
@@ -124,6 +146,9 @@ function EnemyOne:getDamage(damage)
 
     if self.health <= 0 then
       self.state = EnemyState.dead
+      self.audio.die:play()
+    else
+      self.audio.hit:play()
     end
   end
 end
