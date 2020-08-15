@@ -50,7 +50,7 @@ function Player.new()
     y = 0,
     speed = 0,
     health = 100,
-    power = 20,
+    power = 50,
     state = PlayerState.idle,
     killCount = 0
   }, Player)

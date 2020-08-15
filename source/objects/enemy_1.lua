@@ -148,6 +148,7 @@ function EnemyOne:getDamage(damage)
       self.state = EnemyState.dead
       self.audio.die:play()
       player.killCount = player.killCount + 1
+      PushForward(self)
     else
       self.audio.hit:play()
     end
@@ -179,6 +180,18 @@ function ScaleBody(self, dt)
 
   self.posX = math.sin(self.time) * 2 + 32 - 32 * self.scale
   self.posY = math.cos(self.time) * 2 + 32 - 32 * self.scale
+end
+
+function PushForward(self)
+  self.time = 0
+  self.posX = 0
+  self.posY = 0
+  self.scale = 0.1
+  self.linearPos = self.linearPos + 3
+  self.power = math.random(10, 10)
+  self.health = math.random(80, 120)
+  self.state = EnemyState.asleep
+  self.encountered = false
 end
 
 return setmetatable({}, {__call = function(_, ...) return EnemyOne.new(...) end})
