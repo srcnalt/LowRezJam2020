@@ -1,6 +1,5 @@
 --source files
 require 'source.settings'
-require 'source.debug'
 require 'source.utils'
 require 'source.states'
 require 'source.anim'
@@ -14,7 +13,7 @@ _player = require 'source.objects.player'
 _input = require 'plugins.Input'
 
 function love.load()
-    gameState = SceneStates.menu
+    gameState = SceneStates.game
     stateToGo = SceneStates.debug
 
     globalPos = 0
@@ -68,8 +67,7 @@ function love.draw()
 
   end
 
-  --draw debug
-  drawDebug(enemy.state)
+  --lg.print(enemy.state)
   --draw curtain
   drawCurtain()
   --end drawing into canvas

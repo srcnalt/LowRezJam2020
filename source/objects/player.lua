@@ -2,34 +2,43 @@ local Player = {}
 Player.__index = Player
 
 function Player.new()
-    local idleImg = lg.newImage('graphics/player/sword-shield.png')
-    local swordImg = lg.newImage('graphics/player/sword-up.png')
-    local shieldImg = lg.newImage('graphics/player/shield-up.png')
+  local idleImg = lg.newImage('graphics/player/Player_Idle.png')
 
-    input:bind('up', 'player_move_forward')
-    input:bind('down', 'player_move_backwards')
-    input:bind('left', 'player_attack')
-    input:bind('right', 'player_defend')
+  local attackImg = lg.newImage('graphics/player/Player_Attack.png')
+  local animAttack = anim.new(attackImg, 64, 64, 0.2)
 
-    return setmetatable({
-        img = {
-            idle = idleImg,
-            sword = swordImg,
-            shield = shieldImg
-        },
-        fight = {
-            time = 0,
-            cooldown = 0.5,
-            active = false
-        },
-        moving = false,
-        x = 0,
-        y = 0,
-        speed = 0,
-        health = 100,
-        power = 50,
-        state = PlayerState.idle
-    }, Player)
+  local defendImg = lg.newImage('graphics/player/Player_Defend.png')
+  local animDefend = anim.new(defendImg, 64, 64, 0.2)
+
+  input:bind('up', 'player_move_forward')
+  input:bind('down', 'player_move_backwards')
+  input:bind('left', 'player_attack')
+  input:bind('right', 'player_defend')
+
+  return setmetatable({
+    img = {
+      idle = idleImg,
+      attack = animAttack,
+      defend = animDefend
+    },
+    fight = {
+      time = 0,
+      cooldown = 1,
+      active = false
+    },
+    defend = {
+      time = 0,
+      cooldown = 0.6,
+      active = false
+    },
+    moving = false,
+    x = 0,
+    y = 0,
+    speed = 0,
+    health = 100,
+    power = 50,
+    state = PlayerState.idle
+  }, Player)
 end
 
 function Player:update(dt)
@@ -39,21 +48,25 @@ function Player:update(dt)
       self.y = self.y + dt * self.speed
     elseif self.state == PlayerState.attack then
       self.fight.time = self.fight.time + dt
+      self.img.attack:update(dt)
 
-      if self.fight.time > self.fight.cooldown then
+      if self.fight.time >= self.fight.cooldown then
         self.state = PlayerState.idle
         self.fight.time = 0
         self.fight.active = false
+        self.img.attack.pos = 1
 
         enemy:getDamage(self.power + math.random(-20, 20))
       end
     elseif self.state == PlayerState.defend then
-      self.fight.time = self.fight.time + dt
+      self.defend.time = self.defend.time + dt
+      self.img.defend:update(dt)
 
-      if self.fight.time > self.fight.cooldown then
+      if self.defend.time >= self.defend.cooldown then
         self.state = PlayerState.idle
-        self.fight.time = 0
-        self.fight.active = false
+        self.defend.time = 0
+        self.defend.active = false
+        self.img.defend.pos = 1
       end
     elseif self.state == PlayerState.defend then
       
@@ -61,13 +74,13 @@ function Player:update(dt)
 end
 
 function Player:draw()
-    if self.state == PlayerState.idle then
-        lg.draw(self.img.idle, 0, math.sin(self.y) + 1)
-    elseif self.state == PlayerState.attack then
-        lg.draw(self.img.sword, 0, math.sin(self.y) + 1)
-    elseif self.state == PlayerState.defend then
-        lg.draw(self.img.shield, 0, math.sin(self.y) + 1)
-    end
+  if self.state == PlayerState.idle then
+    lg.draw(self.img.idle, 0, math.sin(self.y) + 1)
+  elseif self.state == PlayerState.attack then
+    self.img.attack:draw()
+  elseif self.state == PlayerState.defend then
+    self.img.defend:draw()
+  end
 end
 
 function HandleInput(self)
@@ -82,9 +95,9 @@ function HandleInput(self)
     if input:pressed('player_attack') and not self.fight.active then 
         self.state = PlayerState.attack 
         self.fight.active = true
-    elseif input:pressed('player_defend') and not self.fight.active then
+    elseif input:pressed('player_defend') and not self.defend.active then
         self.state = PlayerState.defend 
-        self.fight.active = true
+        self.defend.active = true
     end
 end
 

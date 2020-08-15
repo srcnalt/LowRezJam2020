@@ -15,7 +15,7 @@ lg.setBackgroundColor(0, 0, 0)
 lg.setDefaultFilter('nearest', 'nearest')
 
 lw.setMode(SCREEN_UNIT, SCREEN_UNIT, {fullscreen = false, centered = false})
-lw.setTitle('Elder Scrolls')
+lw.setTitle('Landlord')
 
 --random seed
 math.randomseed(os.time())
