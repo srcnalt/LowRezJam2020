@@ -10,6 +10,8 @@ function EnemyOne.new()
   
   local getHit = lg.newImage('graphics/enemies/Enemy_Skeleton_GetHit.png')
   local animGetHit = anim.new(getHit, 64, 64, 0.2)
+  
+  local hitAudio = la.newSource("sound/sfx/hurt.wav", "static")
 
   return setmetatable({
     anim = {
@@ -26,6 +28,9 @@ function EnemyOne.new()
     damage = {
       time = 0,
       length = 0.6
+    },
+    audio = {
+      hit = hitAudio
     },
     time = 0,
     posX = 0,
@@ -65,10 +70,14 @@ function EnemyOne:update(dt)
     ScaleBody(self, dt)
     self.attack.time = self.attack.time + dt
 
-    if self.anim.attack.pos == 1 then
+    if self.anim.attack.pos == 3 and not self.attack.hitting then
       self.attack.hitting = true
-    elseif self.anim.attack.pos == 3 and player.state ~= PlayerState.dead and self.attack.hitting then
-      player:getDamage(self.power)
+
+      if player.state ~= PlayerState.dead and not player.defend.active and self.attack.hitting then
+        player:getDamage(self.power)
+        self.audio.hit:play()
+      end
+    elseif self.anim.attack.pos == 4 then
       self.attack.hitting = false
     end
 
@@ -87,6 +96,7 @@ function EnemyOne:update(dt)
     if self.damage.time >= self.damage.length then
       self.damage.time = 0
       self.state = EnemyState.idle
+      self.anim.hit.pos = 1
     end
   end
 end

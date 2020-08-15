@@ -67,7 +67,7 @@ function love.draw()
 
   end
 
-  --lg.print(enemy.state)
+  lg.print(string.format("%s", player.health))
   --draw curtain
   drawCurtain()
   --end drawing into canvas
