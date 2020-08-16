@@ -29,7 +29,7 @@ function EnemyTwo.new()
     attack = {
       delay = 1,
       time = 0,
-      length = 1.6,
+      length = 1.5,
       hitting = false,
       dodged = false
     },
@@ -155,10 +155,10 @@ function EnemyTwo:getDamage(damage)
     self.health = self.health - damage
 
     if self.health <= 0 then
+      PushForward(self)
       self.state = EnemyState.dead
       self.audio.die:play()
       player.killCount = player.killCount + 1
-      PushForward(self)
     else
       self.audio.hit:play()
     end
