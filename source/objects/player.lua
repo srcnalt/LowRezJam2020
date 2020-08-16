@@ -52,7 +52,8 @@ function Player.new()
     health = 100,
     power = 40,
     state = PlayerState.idle,
-    killCount = 0
+    killCount = 0,
+    killTarget = 2
   }, Player)
 end
 
@@ -98,7 +99,7 @@ function Player:update(dt)
       end
     end
     
-    if self.killCount == 12 then
+    if self.killCount == self.killTarget then
       stateToGo = SceneStates.win
       curtainIsOn = true
     end

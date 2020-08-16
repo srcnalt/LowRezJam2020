@@ -38,6 +38,13 @@ function updateCurtain(dt)
 
                 if gameState == SceneStates.menu then
                     love.load()
+                    gameMusic:stop()
+                elseif gameState == SceneStates.game then
+                    gameMusic:play()
+                    menuMusic:stop()
+                elseif gameState == SceneStates.win or gameState == SceneStates.lose then
+                    gameMusic:stop()
+                    menuMusic:play()
                 end
             end
         else

@@ -16,6 +16,9 @@ _enemy_3 = require 'source.objects.enemy_3'
 --plugins
 _input = require 'plugins.Input'
 
+menuMusic = la.newSource("sound/music/menu.wav", "stream")
+gameMusic = la.newSource("sound/music/game.wav", "stream")
+
 function love.load()
     gameState = SceneStates.menu
     stateToGo = SceneStates.menu
@@ -32,6 +35,7 @@ function love.load()
     enemy = _enemy_1()
 
     drawInit()
+    menuMusic:play()
 end
 
 function love.update(dt)
