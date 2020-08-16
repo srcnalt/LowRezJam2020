@@ -52,8 +52,8 @@ function EnemyTwo.new()
     posY = 0,
     scale = 0.1,
     linearPos = globalPos + 1.5,
-    power = math.random(10, 10),
-    health = math.random(80, 120),
+    power = math.random(40, 80),
+    health = math.random(40, 60),
     state = EnemyState.asleep,
     encountered = false,
     exploded = false

@@ -10,6 +10,7 @@ function Story.new()
   local story3 = lg.newImage('graphics/stories/party_win.png')
   local story4 = lg.newImage('graphics/stories/failed_mission.png')
   local story5 = lg.newImage('graphics/stories/credits.png')
+  local story6 = lg.newImage('graphics/stories/joystick.png')
 
   return setmetatable({
     story = {
@@ -17,7 +18,8 @@ function Story.new()
       two = story2,
       win = story3,
       lose = story4,
-      credits = story5
+      credits = story5,
+      input = story6
     }
   }, Story)
 end
@@ -32,6 +34,9 @@ function Story:draw()
     skip:draw(30, 61)
   elseif gameState == SceneStates.story_2 then
     lg.draw(self.story.two)
+    skip:draw(30, 61)
+  elseif gameState == SceneStates.input then
+    lg.draw(self.story.input)
     skip:draw(30, 61)
   elseif gameState == SceneStates.win then
     lg.draw(self.story.win)

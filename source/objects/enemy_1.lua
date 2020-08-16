@@ -26,7 +26,7 @@ function EnemyOne.new()
       hit = animGetHit
     },
     attack = {
-      delay = 1,
+      delay = 0.5,
       time = 0,
       length = 1,
       hitting = false,
@@ -50,7 +50,7 @@ function EnemyOne.new()
     posY = 0,
     scale = 0.1,
     linearPos = globalPos + 1.5,
-    power = math.random(10, 10),
+    power = math.random(20, 30),
     health = math.random(80, 120),
     state = EnemyState.asleep,
     encountered = false

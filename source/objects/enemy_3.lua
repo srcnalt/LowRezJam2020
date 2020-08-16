@@ -26,7 +26,7 @@ function EnemyThree.new()
       hit = animGetHit
     },
     attack = {
-      delay = 1,
+      delay = 0.2,
       time = 0,
       length = 1.7,
       hitting = false,
@@ -50,8 +50,8 @@ function EnemyThree.new()
     posY = 0,
     scale = 0.1,
     linearPos = globalPos + 1.5,
-    power = math.random(10, 10),
-    health = math.random(80, 120),
+    power = math.random(40, 60),
+    health = math.random(140, 180),
     state = EnemyState.asleep,
     encountered = false
   }, EnemyThree)

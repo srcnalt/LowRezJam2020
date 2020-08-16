@@ -46,12 +46,14 @@ function love.update(dt)
     story:update(dt)
   elseif gameState == SceneStates.input then
     CheckNextStateToGo(SceneStates.game)
+    story:update(dt)
   elseif gameState == SceneStates.game then
     map:update(dt)
     enemy:update(dt)
     player:update(dt)
   elseif gameState == SceneStates.win or gameState == SceneStates.lose then
     CheckNextStateToGo(SceneStates.credits)
+    story:update(dt)
   elseif gameState == SceneStates.credits then
     CheckNextStateToGo(SceneStates.menu)
   end
@@ -66,7 +68,7 @@ function love.draw()
   --states
   if gameState == SceneStates.menu then 
     menu:draw()
-  elseif gameState == SceneStates.story_1 or gameState == SceneStates.story_2 or gameState == SceneStates.win or gameState == SceneStates.lose or gameState == SceneStates.credits then
+  elseif gameState == SceneStates.story_1 or gameState == SceneStates.story_2 or gameState == SceneStates.win or gameState == SceneStates.lose or gameState == SceneStates.credits or gameState == SceneStates.input then
     story:draw()
   elseif gameState == SceneStates.game then
     map:draw()
