@@ -53,7 +53,7 @@ function Player.new()
     power = 40,
     state = PlayerState.idle,
     killCount = 0,
-    killTarget = 2
+    killTarget = 12
   }, Player)
 end
 
