@@ -149,6 +149,8 @@ function Player:resetEnemy()
   if enemy.name == "skeletor" then
     enemy = _enemy_2()
   elseif enemy.name == "orko" then
+    enemy = _enemy_3()
+  elseif enemy.name == "demon" then
     enemy = _enemy_1()
   end 
 end

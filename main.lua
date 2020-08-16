@@ -10,6 +10,7 @@ _menu = require 'source.objects.menu'
 _player = require 'source.objects.player'
 _enemy_1 = require 'source.objects.enemy_1'
 _enemy_2 = require 'source.objects.enemy_2'
+_enemy_3 = require 'source.objects.enemy_3'
 
 --plugins
 _input = require 'plugins.Input'
