@@ -1,5 +1,4 @@
 SceneStates = {
-    debug   = 'debug',
     menu    = 'menu',
     story_1 = 'story_1',
     story_2 = 'story_2',

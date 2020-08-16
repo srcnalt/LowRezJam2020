@@ -17,7 +17,7 @@ _enemy_3 = require 'source.objects.enemy_3'
 _input = require 'plugins.Input'
 
 function love.load()
-    gameState = SceneStates.debug
+    gameState = SceneStates.menu
     stateToGo = SceneStates.menu
 
     globalPos = 0
@@ -47,15 +47,13 @@ function love.update(dt)
   elseif gameState == SceneStates.input then
     CheckNextStateToGo(SceneStates.game)
   elseif gameState == SceneStates.game then
-    CheckNextStateToGo(SceneStates.credits)
-
     map:update(dt)
     enemy:update(dt)
     player:update(dt)
+  elseif gameState == SceneStates.win or gameState == SceneStates.lose then
+    CheckNextStateToGo(SceneStates.credits)
   elseif gameState == SceneStates.credits then
     CheckNextStateToGo(SceneStates.menu)
-  elseif gameState == SceneStates.debug then
-    curtainIsOn = true
   end
 
   updateCurtain(dt)
@@ -68,16 +66,12 @@ function love.draw()
   --states
   if gameState == SceneStates.menu then 
     menu:draw()
-  elseif gameState == SceneStates.story_1 then
-    story:draw()
-  elseif gameState == SceneStates.story_2 then
+  elseif gameState == SceneStates.story_1 or gameState == SceneStates.story_2 or gameState == SceneStates.win or gameState == SceneStates.lose or gameState == SceneStates.credits then
     story:draw()
   elseif gameState == SceneStates.game then
     map:draw()
     enemy:draw()
     player:draw()
-  elseif gameState == SceneStates.credits then
-
   end
 
   --draw curtain
