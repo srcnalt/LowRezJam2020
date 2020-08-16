@@ -22,6 +22,11 @@ function Player.new()
   input:bind('down', 'player_move_backwards')
   input:bind('left', 'player_attack')
   input:bind('right', 'player_defend')
+  
+  input:bind('w', 'player_move_forward')
+  input:bind('s', 'player_move_backwards')
+  input:bind('a', 'player_attack')
+  input:bind('d', 'player_defend')
 
   return setmetatable({
     img = {

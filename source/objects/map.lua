@@ -16,6 +16,9 @@ function Map.new()
     input:bind('up', 'move_forward')
     input:bind('down', 'move_backwards')
 
+    input:bind('w', 'move_forward')
+    input:bind('s', 'move_backwards')
+
     currentAnim = animForward
 
     return setmetatable({

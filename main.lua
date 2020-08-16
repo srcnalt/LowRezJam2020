@@ -17,7 +17,9 @@ _enemy_3 = require 'source.objects.enemy_3'
 _input = require 'plugins.Input'
 
 menuMusic = la.newSource("sound/music/menu.ogg", "stream")
+menuMusic:setLooping(true)
 gameMusic = la.newSource("sound/music/game.ogg", "stream")
+gameMusic:setLooping(true)
 select = la.newSource("sound/sfx/select.wav", "static")
 
 function love.load()
@@ -28,6 +30,7 @@ function love.load()
 
     input = _input()
     input:bind('x', 'next')
+    input:bind('space', 'next')
 
     map = _map()
     menu = _menu()
