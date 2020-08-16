@@ -16,9 +16,9 @@ function drawEnd()
 end
 
 --scene switch helper methods
-curtainIsOn = false
-curtainDarken = true
-curtainAlpha = 1
+curtainIsOn = true
+curtainDarken = false
+curtainAlpha = 0
 curtain = lg.newImage('graphics/curtain.png')
 
 function drawCurtain()
