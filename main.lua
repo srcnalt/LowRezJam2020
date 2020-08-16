@@ -16,8 +16,9 @@ _enemy_3 = require 'source.objects.enemy_3'
 --plugins
 _input = require 'plugins.Input'
 
-menuMusic = la.newSource("sound/music/menu.wav", "stream")
-gameMusic = la.newSource("sound/music/game.wav", "stream")
+menuMusic = la.newSource("sound/music/menu.ogg", "stream")
+gameMusic = la.newSource("sound/music/game.ogg", "stream")
+select = la.newSource("sound/sfx/select.wav", "static")
 
 function love.load()
     gameState = SceneStates.menu
@@ -90,5 +91,6 @@ function CheckNextStateToGo(state)
   if input:pressed('next') then
     stateToGo = state
     curtainIsOn = true
+    select:play()
   end
 end
