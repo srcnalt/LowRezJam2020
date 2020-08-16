@@ -5,7 +5,7 @@ function EnemyThree.new()
   local idle = lg.newImage('graphics/enemies/Enemy_Demon_Idle.png')
   local animIdle = anim.new(idle, 64, 64, 0.2)
 
-  local attack = lg.newImage('graphics/enemies/Enemy_Demon_attack.png')
+  local attack = lg.newImage('graphics/enemies/Enemy_Demon_Attack.png')
   local animAttack = anim.new(attack, 64, 64, 0.2)
   
   local getHit = lg.newImage('graphics/enemies/Enemy_Demon_GetHit.png')
