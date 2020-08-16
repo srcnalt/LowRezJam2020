@@ -1,25 +1,26 @@
-local EnemyOne = {}
-EnemyOne.__index = EnemyOne
+local EnemyTwo = {}
+EnemyTwo.__index = EnemyTwo
 
-function EnemyOne.new()
-  local idle = lg.newImage('graphics/enemies/Enemy_Skeleton_Idle.png')
+function EnemyTwo.new()
+  local idle = lg.newImage('graphics/enemies/Enemy_Tentacle_Idle.png')
   local animIdle = anim.new(idle, 64, 64, 0.2)
 
-  local attack = lg.newImage('graphics/enemies/Enemy_Skeleton_attack.png')
+  local attack = lg.newImage('graphics/enemies/Enemy_Tentacle_attack.png')
   local animAttack = anim.new(attack, 64, 64, 0.2)
-  
-  local getHit = lg.newImage('graphics/enemies/Enemy_Skeleton_GetHit.png')
+
+  local getHit = lg.newImage('graphics/enemies/Enemy_Tentacle_GetHit.png')
   local animGetHit = anim.new(getHit, 64, 64, 0.2)
   
   local hitAudio = la.newSource("sound/sfx/hit3.wav", "static")
   local dodgeAudio = la.newSource("sound/sfx/hit2.wav", "static")
+  local explodeAudio = la.newSource("sound/sfx/hurt3.wav", "static")
   local dieAudio = la.newSource("sound/sfx/hurt2.wav", "static")
   
   local dodgeMsg = lg.newImage('graphics/messages/dodged.png')
   local hitMsg = lg.newImage('graphics/messages/hit.png')
 
   return setmetatable({
-    name = "skeletor",
+    name = "orko",
     anim = {
       idle = animIdle,
       attack = animAttack,
@@ -28,7 +29,7 @@ function EnemyOne.new()
     attack = {
       delay = 1,
       time = 0,
-      length = 1,
+      length = 1.5,
       hitting = false,
       dodged = false
     },
@@ -39,7 +40,8 @@ function EnemyOne.new()
     audio = {
       hit = hitAudio,
       dodge = dodgeAudio,
-      die = dieAudio
+      die = dieAudio,
+      explode = explodeAudio
     },
     messages = {
       dodge = dodgeMsg,
@@ -53,11 +55,12 @@ function EnemyOne.new()
     power = math.random(10, 10),
     health = math.random(80, 120),
     state = EnemyState.asleep,
-    encountered = false
-  }, EnemyOne)
+    encountered = false,
+    exploded = false
+  }, EnemyTwo)
 end
 
-function EnemyOne:update(dt)
+function EnemyTwo:update(dt)
   CheckState(self)
 
   if not encountered and self.scale > 0.4 then
@@ -83,7 +86,7 @@ function EnemyOne:update(dt)
     ScaleBody(self, dt)
     self.attack.time = self.attack.time + dt
 
-    if self.anim.attack.pos == 3 and not self.attack.hitting then
+    if self.anim.attack.pos == 6 and not self.attack.hitting then
       self.attack.hitting = true
 
       if player.state ~= PlayerState.dead and self.attack.hitting then
@@ -93,15 +96,21 @@ function EnemyOne:update(dt)
         else
           player:getDamage(self.power)
         end
+        
+        self.audio.explode:play()
+        self.exploded = true
       end
-    elseif self.anim.attack.pos == 4 then
-      self.attack.hitting = false
-      self.attack.dodged = false
     end
+
+    if self.health < 0 then PushForward(self) end
 
     if self.attack.time >= self.attack.delay + self.attack.length then
       self.anim.attack:reset()
       self.attack.time = 0
+
+      if self.exploded then
+        PushForward(self)
+      end
     elseif self.attack.time >= self.attack.delay then
       self.anim.attack:update(dt)
     else
@@ -119,7 +128,7 @@ function EnemyOne:update(dt)
   end
 end
 
-function EnemyOne:draw()
+function EnemyTwo:draw()
   if self.state == EnemyState.idle then
     lg.setColor( 255, 255, 255, self.scale)
     self.anim.idle:draw(self.posX, self.posY, 0, self.scale, self.scale)
@@ -140,16 +149,16 @@ function EnemyOne:draw()
   end
 end
 
-function EnemyOne:getDamage(damage)
+function EnemyTwo:getDamage(damage)
   if self.linearPos - globalPos == 0 then
     self.state = EnemyState.damaged
     self.health = self.health - damage
 
     if self.health <= 0 then
+      PushForward(self)
       self.state = EnemyState.dead
       self.audio.die:play()
       player.killCount = player.killCount + 1
-      PushForward(self)
     else
       self.audio.hit:play()
     end
@@ -187,4 +196,4 @@ function PushForward(self)
   player:resetEnemy()
 end
 
-return setmetatable({}, {__call = function(_, ...) return EnemyOne.new(...) end})
+return setmetatable({}, {__call = function(_, ...) return EnemyTwo.new(...) end})

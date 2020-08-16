@@ -6,48 +6,52 @@ require 'source.anim'
 
 --objects
 _map = require 'source.objects.map'
-_enemy = require 'source.objects.enemy_1'
+_menu = require 'source.objects.menu'
 _player = require 'source.objects.player'
+_enemy_1 = require 'source.objects.enemy_1'
+_enemy_2 = require 'source.objects.enemy_2'
+_enemy_3 = require 'source.objects.enemy_3'
 
 --plugins
 _input = require 'plugins.Input'
 
 function love.load()
-    gameState = SceneStates.game
-    stateToGo = SceneStates.debug
+    gameState = SceneStates.debug
+    stateToGo = SceneStates.menu
 
     globalPos = 0
 
     input = _input()
-    input:bind('space', 'next')
+    input:bind('x', 'next')
 
     map = _map()
+    menu = _menu()
     player = _player()
-    enemy = _enemy()
-
-    images = {
-      menu = lg.newImage('graphics/menu.png')
-    }
+    enemy = _enemy_1()
 
     drawInit()
 end
 
 function love.update(dt)
-    if gameState == SceneStates.menu then 
-      CheckNextStateToGo(SceneStates.intro)
-    elseif gameState == SceneStates.intro then
-      CheckNextStateToGo(SceneStates.game)
-    elseif gameState == SceneStates.game then
-      CheckNextStateToGo(SceneStates.credits)
+  if gameState == SceneStates.menu then 
+    CheckNextStateToGo(SceneStates.intro)
+    
+    menu:update(dt)
+  elseif gameState == SceneStates.intro then
+    CheckNextStateToGo(SceneStates.game)
+  elseif gameState == SceneStates.game then
+    CheckNextStateToGo(SceneStates.credits)
 
-      map:update(dt)
-      enemy:update(dt)
-      player:update(dt)
-    elseif gameState == SceneStates.credits then
-      CheckNextStateToGo(SceneStates.menu)
-    end
+    map:update(dt)
+    enemy:update(dt)
+    player:update(dt)
+  elseif gameState == SceneStates.credits then
+    CheckNextStateToGo(SceneStates.menu)
+  elseif gameState == SceneStates.debug then
+    curtainIsOn = true
+  end
 
-    updateCurtain(dt)
+  updateCurtain(dt)
 end
 
 function love.draw()
@@ -56,7 +60,7 @@ function love.draw()
 
   --states
   if gameState == SceneStates.menu then 
-    lg.draw(images.menu, 0, 0)
+    menu:draw()
   elseif gameState == SceneStates.intro then
 
   elseif gameState == SceneStates.game then
@@ -67,9 +71,6 @@ function love.draw()
 
   end
 
-  --lg.print(string.format("%s", player.defend.active))
-  --lg.print(string.format("%s", player.fight.active), 0, 10)
-  --lg.print(string.format("%s", player.health), 0, 20)
   --draw curtain
   drawCurtain()
   --end drawing into canvas
