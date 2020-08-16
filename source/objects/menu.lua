@@ -4,7 +4,7 @@ Menu.__index = Menu
 function Menu.new()
   local menuImg = lg.newImage('graphics/menu.png')
   local logoImg = lg.newImage('graphics/logo.png')
-  local startImg = lg.newImage('graphics/start.png')
+  local startImg = lg.newImage('graphics/messages/start.png')
 
   return setmetatable({
     background = menuImg,
@@ -32,10 +32,6 @@ function Menu:draw()
   lg.draw(self.background, 0, 0)
   lg.draw(self.logo, 9, self.logoPos)
   if drawStart then lg.draw(self.start, 6, 1) end
-end
-
-function HandleInput(self)
-    
 end
 
 return setmetatable({}, {__call = function(_, ...) return Menu.new(...) end})
