@@ -1,7 +1,6 @@
 local Map = {}
 Map.__index = Map
 
-local moving = MovementStates.stop
 local currentAnim = {}
 
 function Map.new()
@@ -26,34 +25,34 @@ function Map.new()
             right   = animRight
         },
         time = 0,
-        moving = moving
+        moving = MovementStates.stop
     }, Map)
 end
 
 function Map:update(dt)
     if input:down('move_forward') then 
-        moving = MovementStates.forward
+        self.moving = MovementStates.forward
         globalPos = globalPos + dt / 2
         RoadSwitch(self)
     elseif input:released('move_forward') then
-        moving = MovementStates.stop
+        self.moving = MovementStates.stop
     end
 
     if input:down('move_backwards') then 
-        moving = MovementStates.backwards
+        self.moving = MovementStates.backwards
         globalPos = globalPos - dt / 2
         RoadSwitchBack(self)
     elseif input:released('move_backwards') then
-        moving = MovementStates.stop
+        self.moving = MovementStates.stop
     end
     
     currentAnim:update(dt)
 end
 
 function Map:draw()
-    if moving == MovementStates.forward then
+    if self.moving == MovementStates.forward then
         currentAnim.speed = 0.1
-    elseif moving == MovementStates.backwards then
+    elseif self.moving == MovementStates.backwards then
         currentAnim.speed = -0.1
     else
         currentAnim.speed = 0

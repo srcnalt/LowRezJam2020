@@ -7,6 +7,7 @@ require 'source.anim'
 --objects
 _map = require 'source.objects.map'
 _menu = require 'source.objects.menu'
+_story = require 'source.objects.story'
 _player = require 'source.objects.player'
 _enemy_1 = require 'source.objects.enemy_1'
 _enemy_2 = require 'source.objects.enemy_2'
@@ -16,7 +17,7 @@ _enemy_3 = require 'source.objects.enemy_3'
 _input = require 'plugins.Input'
 
 function love.load()
-    gameState = SceneStates.debug
+    gameState = SceneStates.menu
     stateToGo = SceneStates.menu
 
     globalPos = 0
@@ -26,6 +27,7 @@ function love.load()
 
     map = _map()
     menu = _menu()
+    story = _story()
     player = _player()
     enemy = _enemy_1()
 
@@ -34,21 +36,24 @@ end
 
 function love.update(dt)
   if gameState == SceneStates.menu then 
-    CheckNextStateToGo(SceneStates.intro)
-    
+    CheckNextStateToGo(SceneStates.story_1)
     menu:update(dt)
-  elseif gameState == SceneStates.intro then
+  elseif gameState == SceneStates.story_1 then
+    CheckNextStateToGo(SceneStates.story_2)
+    story:update(dt)
+  elseif gameState == SceneStates.story_2 then
+    CheckNextStateToGo(SceneStates.input)
+    story:update(dt)
+  elseif gameState == SceneStates.input then
     CheckNextStateToGo(SceneStates.game)
   elseif gameState == SceneStates.game then
-    CheckNextStateToGo(SceneStates.credits)
-
     map:update(dt)
     enemy:update(dt)
     player:update(dt)
+  elseif gameState == SceneStates.win or gameState == SceneStates.lose then
+    CheckNextStateToGo(SceneStates.credits)
   elseif gameState == SceneStates.credits then
     CheckNextStateToGo(SceneStates.menu)
-  elseif gameState == SceneStates.debug then
-    curtainIsOn = true
   end
 
   updateCurtain(dt)
@@ -61,14 +66,12 @@ function love.draw()
   --states
   if gameState == SceneStates.menu then 
     menu:draw()
-  elseif gameState == SceneStates.intro then
-
+  elseif gameState == SceneStates.story_1 or gameState == SceneStates.story_2 or gameState == SceneStates.win or gameState == SceneStates.lose or gameState == SceneStates.credits then
+    story:draw()
   elseif gameState == SceneStates.game then
     map:draw()
     enemy:draw()
     player:draw()
-  elseif gameState == SceneStates.credits then
-
   end
 
   --draw curtain

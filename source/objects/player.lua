@@ -96,7 +96,12 @@ function Player:update(dt)
         self.img.defend.pos = 1
         self.defend.active = false
       end
-    end    
+    end
+    
+    if self.killCount == 3 then
+      stateToGo = SceneStates.win
+      curtainIsOn = true
+    end
 end
 
 function Player:draw()
@@ -140,6 +145,8 @@ function Player:getDamage(damage)
   if self.health <= 0 then
     self.state = PlayerState.dead
     self.audio.die:play()
+    stateToGo = SceneStates.lose
+    curtainIsOn = true
   else
     self.audio.hit:play()
   end

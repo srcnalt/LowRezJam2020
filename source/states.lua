@@ -1,7 +1,10 @@
 SceneStates = {
-    debug   = 'debug',
     menu    = 'menu',
-    intro   = 'intro',
+    story_1 = 'story_1',
+    story_2 = 'story_2',
+    input   = 'input',
+    win     = 'win',
+    lose    = 'lose',
     game    = 'game',
     credits = 'credits'
 }

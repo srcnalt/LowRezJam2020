@@ -35,6 +35,10 @@ function updateCurtain(dt)
             else
                 gameState = stateToGo
                 curtainDarken = false
+
+                if gameState == SceneStates.menu then
+                    love.load()
+                end
             end
         else
             if curtainAlpha < 1 then
