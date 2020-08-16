@@ -6,8 +6,9 @@ require 'source.anim'
 
 --objects
 _map = require 'source.objects.map'
-_enemy = require 'source.objects.enemy_1'
 _player = require 'source.objects.player'
+_enemy_1 = require 'source.objects.enemy_1'
+_enemy_2 = require 'source.objects.enemy_2'
 
 --plugins
 _input = require 'plugins.Input'
@@ -23,7 +24,7 @@ function love.load()
 
     map = _map()
     player = _player()
-    enemy = _enemy()
+    enemy = _enemy_1()
 
     images = {
       menu = lg.newImage('graphics/menu.png')
@@ -67,9 +68,10 @@ function love.draw()
 
   end
 
-  --lg.print(string.format("%s", player.defend.active))
+  --lg.setFont(love.graphics.newFont(8))
+  --lg.print(enemy.linearPos, 0, 10)
   --lg.print(string.format("%s", player.fight.active), 0, 10)
-  --lg.print(string.format("%s", player.health), 0, 20)
+  --lg.print(string.format("%s", enemy.state), 0, 20)
   --draw curtain
   drawCurtain()
   --end drawing into canvas

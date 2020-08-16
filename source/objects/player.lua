@@ -145,4 +145,12 @@ function Player:getDamage(damage)
   end
 end
 
+function Player:resetEnemy()
+  if enemy.name == "skeletor" then
+    enemy = _enemy_2()
+  elseif enemy.name == "orko" then
+    enemy = _enemy_1()
+  end 
+end
+
 return setmetatable({}, {__call = function(_, ...) return Player.new(...) end})
