@@ -19,11 +19,11 @@ However the castle is full of monsters and evil creatures, he first needs to cle
 
 ### Controls
 
-A or Left Arrow Key - Attack
-D or Right Arrow Key - Defend
-W or Up Arrow Key - Walk Forward
-S or Down Arrow Key - Walk Backwards
-X or Space - Skip
+- A or Left Arrow Key - Attack
+- D or Right Arrow Key - Defend
+- W or Up Arrow Key - Walk Forward
+- S or Down Arrow Key - Walk Backwards
+- X or Space - Skip
 
  If web version controls are acting funky play with WASD buttons or on fullscreen mode.
 
