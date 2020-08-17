@@ -5,7 +5,7 @@
 
 This is a submission to [LOWREZJAM 2020](https://itch.io/jam/lowrezjam-2020/rate/731640) [64x64 pixel games]
 
-<img src="https://img.itch.zone/aW1hZ2UvNzMxNjQwLzQwNjg0MTIuZ2lm/347x500/TgQcDU.gif" height="300"> <img src="https://img.itch.zone/aW1hZ2UvNzMxNjQwLzQwNjgwNzMucG5n/347x500/YFQ1sL.png" width="300"><img src="https://img.itch.zone/aW1hZ2UvNzMxNjQwLzQwNjgwNzIuanBn/347x500/blf5%2Bq.jpg" width="300">
+<img src="https://img.itch.zone/aW1hZ2UvNzMxNjQwLzQwNjg0MTIuZ2lm/347x500/TgQcDU.gif" height="300"> <img src="https://img.itch.zone/aW1hZ2UvNzMxNjQwLzQwNjgwNzMucG5n/347x500/YFQ1sL.png" width="300">
 
 Landlord is a 2D First Person View Dungeon Crawler-like Action Horror game with monsters, knights and castles.
 
