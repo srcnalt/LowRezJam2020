@@ -5,7 +5,7 @@ lw = love.window
 
 --constant variables
 CURTAIN_SPEED = 2
-SCREEN_SCALE = 12
+SCREEN_SCALE = 7
 SCREEN_UNIT = 64 * SCREEN_SCALE
 DEBUG_ON = false
 
