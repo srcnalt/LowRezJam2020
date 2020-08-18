@@ -16,9 +16,9 @@ _enemy_3 = require 'source.objects.enemy_3'
 --plugins
 _input = require 'plugins.Input'
 
-menuMusic = la.newSource("sound/music/menu.ogg", "stream")
+menuMusic = la.newSource("sound/music/menu.ogg", "static")
 menuMusic:setLooping(true)
-gameMusic = la.newSource("sound/music/game.ogg", "stream")
+gameMusic = la.newSource("sound/music/game.ogg", "static")
 gameMusic:setLooping(true)
 select = la.newSource("sound/sfx/select.wav", "static")
 
