@@ -26,7 +26,7 @@ function EnemyThree.new()
       hit = animGetHit
     },
     attack = {
-      delay = 0.2,
+      delay = 0.5,
       time = 0,
       length = 1.7,
       hitting = false,
